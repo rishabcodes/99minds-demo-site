@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title>Loading…</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/admin.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+
+  <!-- Shared layout injected by partials.js -->
+  <div id="nav-root"></div>
+  <div id="cart-root"></div>
+  <div id="checkout-root"></div>
+
+  <!-- ================================================
+       HERO
+  ================================================ -->
+  <section class="hero" id="hero" aria-label="Hero">
+
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow" id="hero-eyebrow"></p>
+
+      <h1 class="hero__headline" id="hero-headline">
+        Your city has<br>a standing offer.
+      </h1>
+
+      <p class="hero__body" id="hero-body"></p>
+
+      <div class="hero__ctas">
+        <a href="collection.html" class="btn btn--primary" id="hero-cta-shop">Shop the Edit</a>
+        <a href="#how-it-works" class="btn btn--ghost">How it works</a>
+      </div>
+
+      <div class="hero__city-pill" id="city-pill" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="hero__image" aria-hidden="true">
+      <img
+        id="hero-image"
+        src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&q=80&fit=crop"
+        alt="Luxury cosmetics — golden serum bottle on warm stone"
+        loading="eager"
+        fetchpriority="high"
+      >
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ================================================
+       HOW IT WORKS
+  ================================================ -->
+  <section class="section section--light" id="how-it-works" aria-labelledby="hiw-headline">
+    <div class="section__inner">
+
+      <p class="eyebrow" data-reveal>99minds Promotions · Three Steps</p>
+      <h2 class="section__headline" id="hiw-headline" data-reveal data-delay="80">
+        Your city. Your offer.<br>Every time.
+      </h2>
+      <p class="section__subhead" data-reveal data-delay="160">
+        No outcomes to gamble on. No codes to remember. Your city's
+        promotion applies to your order automatically — and your store
+        credit lands the moment your order ships.
+      </p>
+
+      <div class="steps-grid">
+
+        <div class="step-card" data-reveal>
+          <span class="step-card__number" aria-hidden="true">01</span>
+          <div class="step-card__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">City Detected</h3>
+          <p class="step-card__body">
+            99minds identifies your location and surfaces your city's active
+            campaign the moment you land. No opt-in required.
+          </p>
+        </div>
+
+        <div class="step-card" data-reveal data-delay="120">
+          <span class="step-card__number" aria-hidden="true">02</span>
+          <div class="step-card__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">Offer Attached</h3>
+          <p class="step-card__body">
+            Your promotion links to your order automatically at checkout.
+            No code entry. No selection required.
+          </p>
+        </div>
+
+        <div class="step-card" data-reveal data-delay="240">
+          <span class="step-card__number" aria-hidden="true">03</span>
+          <div class="step-card__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="step-card__title">Credit Delivered</h3>
+          <p class="step-card__body">
+            When your order ships, your 99minds store credit lands in your
+            account — ready to spend on your next order.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="ticker-wrap" aria-hidden="true">
+        <div class="ticker" id="ticker-inner"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       PRODUCT GRID (preview — 4 items, link to full collection)
+  ================================================ -->
+  <section class="section section--light" id="products" aria-labelledby="products-headline">
+    <div class="section__inner">
+
+      <p class="eyebrow" id="products-eyebrow" data-reveal></p>
+
+      <div class="products-header">
+        <div class="products-header__left">
+          <h2 id="products-headline" data-reveal data-delay="80">Build your shelf.</h2>
+          <p id="products-subhead" data-reveal data-delay="160"></p>
+        </div>
+      </div>
+
+      <div class="product-grid" id="product-grid" role="list" aria-label="Products"></div>
+
+      <div style="text-align:center;margin-top:40px">
+        <a href="collection.html" class="btn btn--dark" id="hero-view-collection">View full collection →</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       BRAND STATEMENT
+  ================================================ -->
+  <section class="section section--light section--center" id="brand-statement" aria-labelledby="brand-headline">
+    <div class="section__inner section__inner--narrow">
+      <h2 class="brand-statement__headline" id="brand-headline" data-reveal>
+        Loyalty that works the way customers actually shop.
+      </h2>
+      <p class="brand-statement__body" id="brand-body" data-reveal data-delay="80">
+        99minds powers location-based promotions, store credit, loyalty
+        points, gift cards, and referral programs — all wired directly into
+        checkout. Your customers get rewarded automatically. You get the data.
+      </p>
+      <a href="https://99minds.io" target="_blank" rel="noopener" class="btn btn--dark" data-reveal data-delay="160">
+        Explore 99minds for your store →
+      </a>
+    </div>
+  </section>
+
+
+  <!-- Shared footer + demo bar injected by partials.js -->
+  <div id="footer-root"></div>
+  <div id="demo-bar-root"></div>
+
+  <script type="module" src="js/pages/home.js"></script>
+</body>
+</html>

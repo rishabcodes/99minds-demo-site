@@ -1,0 +1,12 @@
+{
+  "name": "99minds-demo-site",
+  "version": "1.0.0",
+  "description": "99minds demo storefront",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

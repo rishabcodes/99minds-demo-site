@@ -1,0 +1,241 @@
+/* ============================================================
+   BASE — Variables, Reset, Typography, Shared Utilities
+============================================================ */
+
+/* Fonts loaded via <link> in HTML for performance — no @import here */
+
+:root {
+  /* Colors */
+  --color-bg:          #0a0a0a;
+  --color-surface:     #141414;
+  --color-surface-2:   #1c1c1c;
+  --color-border:      #2a2a2a;
+  --color-gold:        #c9a96e;
+  --color-gold-light:  #e8d5b0;
+  --color-gold-dim:    rgba(201, 169, 110, 0.08);
+  --color-cream:       #f5f0e8;
+  --color-cream-dark:  #ddd5c4;
+  --color-text:        #ffffff;
+  --color-text-dark:   #1a1a1a;
+  --color-muted:       #888888;
+  --color-muted-dark:  rgba(26, 26, 26, 0.5);
+  --color-success:     #4caf7d;
+
+  /* Theme-switchable */
+  --nav-scrolled-bg:     rgba(14, 14, 14, 0.92);
+  --nav-link-color:      rgba(255, 255, 255, 0.68);
+  --nav-link-hover-color: #ffffff;
+  --color-body-text:     rgba(255, 255, 255, 0.78);
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --nav-height:        72px;
+  --bar-height:        52px;
+  --container-width:   1320px;
+  --container-pad:     clamp(24px, 4vw, 64px);
+  --section-pad:       clamp(80px, 10vw, 140px);
+
+  /* Transitions */
+  --t-fast:   150ms ease;
+  --t-base:   260ms ease;
+  --t-slow:   420ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-index */
+  --z-demo-bar:  110;
+  --z-nav:       100;
+  --z-cart:      200;
+  --z-modal:     300;
+}
+
+/* ---- Reset ---- */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Reserve space for fixed demo bar at top (below nav) */
+  padding-top: var(--bar-height);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ---- Shared Typography ---- */
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+}
+
+/* ---- Section Helpers ---- */
+
+.section {
+  padding: var(--section-pad) 0;
+}
+
+.section--light {
+  background-color: var(--color-cream);
+  color: var(--color-text-dark);
+}
+
+.section--light .eyebrow {
+  color: rgba(26, 26, 26, 0.62);
+}
+
+.section--center {
+  text-align: center;
+}
+
+.section__inner {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.section__inner--narrow {
+  max-width: 700px;
+}
+
+.section__inner--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.section__headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.section__subhead {
+  font-size: 15px;
+  color: var(--color-muted);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 60px;
+}
+
+/* ---- Buttons ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: background-color var(--t-base), border-color var(--t-base), color var(--t-base);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--gold {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #1a1209;
+}
+.btn--gold:hover {
+  background-color: var(--color-gold-light);
+  border-color: var(--color-gold-light);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--color-text);
+}
+.btn--ghost:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn--ghost-dark {
+  background-color: transparent;
+  border-color: rgba(26, 26, 26, 0.28);
+  color: var(--color-text-dark);
+}
+.btn--ghost-dark:hover {
+  border-color: var(--color-text-dark);
+}
+
+.btn--dark {
+  background-color: var(--color-text-dark);
+  border-color: var(--color-text-dark);
+  color: #fff;
+}
+.btn--dark:hover {
+  background-color: #2a2a2a;
+  border-color: #2a2a2a;
+}
+
+.btn--primary {
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-bg);
+}
+.btn--primary:hover {
+  background-color: var(--color-gold-light);
+  border-color: var(--color-gold-light);
+  color: #1a1209;
+}
+
+.btn--full {
+  width: 100%;
+  justify-content: center;
+}
+
+.btn--sm {
+  padding: 10px 20px;
+  font-size: 12px;
+}

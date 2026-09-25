@@ -1,0 +1,225 @@
+/* ============================================================
+   ANIMATIONS — Keyframes, Entry States, GSAP Targets
+============================================================ */
+
+/* ---- Keyframes ---- */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 125, 0); }
+  60%       { box-shadow: 0 0 0 5px rgba(76, 175, 125, 0.2); }
+}
+
+@keyframes navPillPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0); }
+  60%       { box-shadow: 0 0 0 5px rgba(201, 169, 110, 0.15); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes checkDraw {
+  from { stroke-dashoffset: 40; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(80px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ---- City Detection Pill ---- */
+
+.city-pill__spinner {
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+.city-pill__detecting {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.city-pill__detect-text {
+  font-size: 12px;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* ---- Hero Entrance (CSS-driven, runs on load) ---- */
+
+.hero__eyebrow {
+  opacity: 0;
+  animation: fadeInUp 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 150ms forwards;
+}
+
+.hero__headline {
+  opacity: 0;
+  animation: fadeInUp 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 300ms forwards;
+}
+
+.hero__body {
+  opacity: 0;
+  animation: fadeInUp 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 500ms forwards;
+}
+
+.hero__ctas {
+  opacity: 0;
+  animation: fadeInUp 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 680ms forwards;
+}
+
+/* ---- Scroll Reveal (IntersectionObserver adds .is-revealed) ---- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+[data-reveal][data-delay="80"]  { transition-delay: 80ms; }
+[data-reveal][data-delay="120"] { transition-delay: 120ms; }
+[data-reveal][data-delay="160"] { transition-delay: 160ms; }
+[data-reveal][data-delay="240"] { transition-delay: 240ms; }
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Opacity-only reveal — for elements with their own transform transitions (e.g. campaign tiles) */
+[data-reveal-fade] {
+  opacity: 0;
+  transition: opacity 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+[data-reveal-fade].is-revealed {
+  opacity: 1;
+}
+
+/* ---- Applied Animations ---- */
+
+.city-pill__dot,
+.campaign-card__status-dot {
+  animation: statusPulse 2.5s ease infinite;
+}
+
+.nav__city-pill {
+  animation: navPillPulse 2s ease 1.2s 3;
+}
+
+/* ---- GSAP Entry Classes ---- */
+/* Phase 4 will add/remove these via GSAP ScrollTrigger */
+
+.gsap-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.gsap-fade-in {
+  opacity: 0;
+}
+
+.gsap-scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* ---- City Detection Pill States (Phase 4) ---- */
+
+.city-detection {
+  /* Initial hidden state — Phase 4 animates this in */
+}
+
+.city-detection--detecting .city-pill__spinner {
+  display: block;
+}
+
+.city-detection--detected .city-pill__location {
+  display: block;
+}
+
+.city-detection--active .city-pill__offer {
+  display: block;
+}
+
+/* ---- Confetti (Phase 4) ---- */
+
+.confetti-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  animation: confettiFall 1.8s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ---- SVG Checkmark Draw ---- */
+
+.check-svg .check-path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: checkDraw 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+}
+
+/* ---- Hover micro-interactions ---- */
+
+.campaign-tile {
+  transition: transform var(--t-base), border-color var(--t-base), box-shadow var(--t-base);
+}
+
+.campaign-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+}
+
+.product-card {
+  transition: box-shadow var(--t-base);
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ---- Smooth open for cart / modal ---- */
+
+.cart {
+  will-change: transform;
+}
+
+.modal-overlay {
+  will-change: opacity;
+}

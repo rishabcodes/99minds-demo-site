@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title>My Rewards</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/admin.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+
+  <div id="nav-root"></div>
+  <div id="cart-root"></div>
+  <div id="checkout-root"></div>
+
+  <!-- ================================================
+       PAGE HEADER
+  ================================================ -->
+  <section class="page-hero">
+    <div class="page-hero__inner">
+      <p class="eyebrow" id="loyalty-hero-eyebrow" style="margin-bottom:14px">99minds · Rewards Program</p>
+      <h1 class="page-title" id="loyalty-hero-title">What you earn,<br>automatically.</h1>
+      <p class="page-subtitle" id="loyalty-hero-subtitle" style="margin-top:12px;max-width:520px;line-height:1.7">
+        Every qualifying order earns you something back. Pick your reward type at checkout —
+        99minds delivers it the moment your order ships. No codes. No waiting.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================
+       REWARD TYPES
+  ================================================ -->
+  <section class="section" style="padding-top:0">
+    <div class="section__inner">
+
+      <div class="rewards-grid" id="rewards-grid"></div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       HOW TO EARN
+  ================================================ -->
+  <section class="section" style="padding-top:var(--section-pad)">
+    <div class="section__inner section__inner--narrow">
+
+      <p class="eyebrow" style="text-align:center;margin-bottom:16px">How it works</p>
+      <h2 class="section__headline" id="loyalty-steps-headline" style="text-align:center;margin-bottom:16px">
+        Three steps.<br>Zero effort.
+      </h2>
+      <p class="section__subhead" id="loyalty-steps-body" style="text-align:center;margin-bottom:56px">
+        99minds handles the entire reward loop — from detecting your city's active
+        campaign to delivering your reward — automatically.
+      </p>
+
+      <div class="earn-steps">
+
+        <div class="earn-step">
+          <span class="earn-step__number">01</span>
+          <div class="earn-step__content">
+            <h4 class="earn-step__title">Shop and hit the threshold</h4>
+            <p class="earn-step__body">
+              Each city campaign has a minimum order value. Hit it and your reward
+              is guaranteed — no other conditions.
+            </p>
+          </div>
+        </div>
+
+        <div class="earn-step">
+          <span class="earn-step__number">02</span>
+          <div class="earn-step__content">
+            <h4 class="earn-step__title">Pick your reward type at checkout</h4>
+            <p class="earn-step__body">
+              Choose store credit, a coupon, points, or a gift card. Your choice
+              is locked in when you complete your order.
+            </p>
+          </div>
+        </div>
+
+        <div class="earn-step">
+          <span class="earn-step__number">03</span>
+          <div class="earn-step__content">
+            <h4 class="earn-step__title">Reward delivered on ship</h4>
+            <p class="earn-step__body">
+              The moment your order ships, 99minds delivers your reward to your
+              account. Store credit applies automatically next time. Done.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       CTA
+  ================================================ -->
+  <section class="section section--center">
+    <div class="section__inner section__inner--narrow">
+      <h2 class="section__headline" style="margin-bottom:16px">
+        Your first reward is one order away.
+      </h2>
+      <p class="section__subhead" style="margin-bottom:36px">
+        Add anything to your bag. Your city's campaign attaches automatically at checkout.
+      </p>
+      <a href="collection.html" id="loyalty-cta-shop" class="btn btn--gold" style="display:inline-block;text-decoration:none;margin-top:8px">
+        Shop the Edit →
+      </a>
+    </div>
+  </section>
+
+
+  <div id="footer-root"></div>
+  <div id="demo-bar-root"></div>
+
+  <script type="module" src="js/pages/loyalty.js"></script>
+</body>
+</html>

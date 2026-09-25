@@ -1,0 +1,234 @@
+/* ============================================================
+   RESPONSIVE — Mobile & Tablet Breakpoints
+============================================================ */
+
+/* ---- 1024px — tablet landscape ---- */
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .campaigns-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero {
+    grid-template-columns: 58% 42%;
+  }
+}
+
+/* ---- 900px — shrink hero split ---- */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 65% 35%;
+  }
+
+  .section__inner--split {
+    gap: 48px;
+  }
+}
+
+/* ---- 768px — tablet portrait / large phone ---- */
+
+@media (max-width: 768px) {
+  /* Hero: single column, hide image panel */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 80vh;
+  }
+
+  .hero__content {
+    padding-right: var(--container-pad);
+    padding-bottom: 60px;
+    max-width: 100%;
+  }
+
+  .hero__image {
+    display: none;
+  }
+
+  /* Section layouts */
+  .section__inner--split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* Product grid: 2 columns */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  /* Campaigns grid: 1 column */
+  .campaigns-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Nav: hide text links and city pill */
+  .nav__links {
+    display: none;
+  }
+
+  .nav__city-pill {
+    display: none;
+  }
+
+  /* PDP: single column */
+  .pdp {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-left: clamp(16px, 4vw, 40px);
+    padding-right: clamp(16px, 4vw, 40px);
+  }
+
+  /* Loyalty: 2x2 stat grid */
+  .loyalty-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Loyalty empty: 2-col features */
+  .loyalty-empty__features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Loyalty rewards grid: single column */
+  .rewards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Section subhead max-width: uncap on mobile */
+  .section__subhead {
+    max-width: 100%;
+  }
+}
+
+/* ---- 640px — phone ---- */
+
+@media (max-width: 640px) {
+  /* Cart sidebar: full-width */
+  .cart {
+    width: 100%;
+    border-left: none;
+  }
+
+  /* Demo bar: strip non-essential chrome */
+  .demo-bar__label {
+    display: none;
+  }
+
+  .demo-bar__brand {
+    display: none;
+  }
+
+  .demo-bar {
+    padding: 0 12px;
+    gap: 4px;
+  }
+
+  .demo-bar__steps {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .demo-bar__steps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .demo-bar__step {
+    font-size: 10px;
+    padding: 5px 0;
+    white-space: nowrap;
+  }
+
+  /* Checkout modal: bottom sheet on mobile */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .checkout-modal {
+    border-radius: 14px 14px 0 0;
+    max-height: 95dvh;
+  }
+
+  /* Product grid: still 2 cols, tighter */
+  .product-grid {
+    gap: 12px;
+  }
+
+  /* Loyalty features: collapse to 1 col */
+  .loyalty-empty__features {
+    grid-template-columns: 1fr;
+  }
+
+  /* Campaign tile: trim verbose text */
+  .campaign-tile__min {
+    display: none;
+  }
+
+  /* Demo guide: collapse to single-column bottom sheet on mobile */
+  .demo-guide {
+    bottom: 0;
+    border-radius: 14px 14px 0 0;
+    width: 100%;
+    grid-template-areas:
+      "hdr  hdr"
+      "prog prog"
+      "body body"
+      "action action";
+    grid-template-columns: 1fr;
+  }
+
+  .demo-guide__action,
+  .demo-guide__waiting {
+    margin: 0 20px 16px;
+    width: calc(100% - 40px);
+    white-space: normal;
+  }
+
+  /* Email modal: edge-to-edge */
+  .email-modal {
+    min-width: unset;
+    width: 100%;
+    border-radius: 14px 14px 0 0;
+    max-height: 92dvh;
+  }
+
+  .email-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+}
+
+/* ---- 480px — small phone ---- */
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loyalty-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero__headline {
+    font-size: clamp(38px, 11vw, 52px);
+  }
+}
+
+/* ---- Touch devices: always show Add to Bag ---- */
+
+@media (hover: none) {
+  .product-card__add {
+    transform: translateY(0);
+    background-color: var(--color-text-dark);
+  }
+}
