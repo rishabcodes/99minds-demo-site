@@ -13,8 +13,8 @@ function buildSteps(store) {
   return [
     {
       step: 1,
-      title: 'City detected',
-      body: `${c.city} identified automatically. The ${c.name} is now active on your session — no opt-in needed.`,
+      title: "Step 1: You're at Velour NY",
+      body: "Kelly's running 12 promotions here this week, each tuned to a different customer segment.",
       action: 'Browse products →',
       onAction: () => {
         advanceDemoBar(2);
