@@ -59,6 +59,7 @@ export function applyStoreToPage() {
 
   // Campaigns section
   setHtml('campaigns-headline', cp.campaignsHeadline);
+  if (cp.campaignsSubhead) setText('campaigns-subhead', cp.campaignsSubhead);
 
   // Brand statement (index.html)
   setHtml('brand-headline', cp.brandHeadline);
@@ -77,11 +78,11 @@ export function applyStoreToPage() {
     setAttr('loyalty-cta-shop', 'href', withStore('collection.html'));
   }
 
-  // Ticker — rebuild from store campaigns
+  // Ticker — list unique segments running in parallel
   const ticker = document.getElementById('ticker-inner');
   if (ticker) {
-    const cities = store.campaigns.map(cp => cp.city).join(' · ');
-    const segment = `<span>Active campaigns: ${cities}</span><span class="ticker__dot">·</span>`;
+    const unique = [...new Set(store.campaigns.map(cp => cp.segment).filter(Boolean))];
+    const segment = `<span>Active campaigns: ${unique.join(' · ')}</span><span class="ticker__dot">·</span>`;
     ticker.innerHTML = segment + segment; // duplicate for seamless CSS loop
   }
 

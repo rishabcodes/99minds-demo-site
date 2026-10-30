@@ -9,8 +9,14 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .campaigns-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* Segment group collapses to vertical stack: context above, tiles below */
+  .campaign-segment-group {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .campaign-segment-group__sub {
+    max-width: 540px;
   }
 
   .hero {
@@ -66,9 +72,13 @@
     gap: 18px;
   }
 
-  /* Campaigns grid: 1 column */
-  .campaigns-grid {
+  /* Campaigns grid: tiles collapse to single column, keep group stacking */
+  .campaign-segment-group__tiles {
     grid-template-columns: 1fr;
+  }
+
+  .campaigns-grid {
+    gap: 44px;
   }
 
   /* Nav: hide text links and city pill */

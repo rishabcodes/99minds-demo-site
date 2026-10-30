@@ -224,11 +224,37 @@
 
 .admin-tr:last-child td { border-bottom: none; }
 
-.admin-tr--city { background: #fffefb; }
-.admin-tr--city td:first-child { border-left: 3px solid #c9a96e; padding-left: 13px; }
-
 .admin-tr__city { font-weight: 600; color: #111; }
 .admin-td--muted { color: #999; }
+.admin-td--faint { color: #bbb; font-size: 11px; }
+
+/* Hero campaign editor (above table) */
+.admin-hero-edit {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: #fffefb;
+  border: 1px solid #ece3d1;
+  border-left: 3px solid #c9a96e;
+  border-radius: 6px;
+}
+.admin-hero-edit__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.admin-hero-edit__label {
+  font-weight: 600;
+  color: #111;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+.admin-hero-edit__inputs {
+  display: flex;
+  gap: 12px;
+}
 
 .admin-badge {
   display: inline-block;

@@ -65,34 +65,41 @@ function populateCampaigns(store) {
 
   const { pct, minOrder } = store.activeCampaign;
 
-  tbody.innerHTML = store.campaigns.map(c => `
-    <tr class="admin-tr ${c.isUserCity ? 'admin-tr--city' : ''}">
-      <td>
-        <span class="admin-tr__city">${c.city}</span>
-        ${c.isUserCity ? '<span class="admin-badge">Your City</span>' : ''}
-      </td>
-      <td class="admin-td--muted">${c.name}</td>
-      <td>
-        ${c.isUserCity
-          ? `<div class="admin-input-wrap"><input type="number" class="admin-input" id="admin-pct" value="${Math.round(pct * 100)}" min="1" max="100" aria-label="Offer percent"><span class="admin-input-suffix">%</span></div>`
-          : `<span class="admin-td--muted">${c.offer}</span>`
-        }
-      </td>
-      <td>
-        ${c.isUserCity
-          ? `<div class="admin-input-wrap"><span class="admin-input-prefix">$</span><input type="number" class="admin-input" id="admin-minorder" value="${minOrder}" min="0" aria-label="Minimum order"></div>`
-          : `<span class="admin-td--muted">${c.minOrder}</span>`
-        }
-      </td>
-      <td>
-        <label class="admin-toggle">
-          <input type="checkbox" class="admin-toggle__input" data-city="${c.city}" ${c.status === 'active' ? 'checked' : ''}>
-          <span class="admin-toggle__track" aria-hidden="true"></span>
-        </label>
-      </td>
-      <td class="admin-td--muted">${c.validThrough}</td>
-    </tr>
-  `).join('');
+  // Hero campaign editor (standalone, no longer embedded in table rows)
+  const heroEdit = document.getElementById('admin-hero-edit');
+  if (heroEdit) {
+    heroEdit.innerHTML = `
+      <div class="admin-hero-edit__inner">
+        <div class="admin-hero-edit__label">${store.activeCampaign.name}<span class="admin-badge">Hero</span></div>
+        <div class="admin-hero-edit__inputs">
+          <div class="admin-input-wrap"><input type="number" class="admin-input" id="admin-pct" value="${Math.round(pct * 100)}" min="1" max="100" aria-label="Offer percent"><span class="admin-input-suffix">%</span></div>
+          <div class="admin-input-wrap"><span class="admin-input-prefix">$</span><input type="number" class="admin-input" id="admin-minorder" value="${minOrder}" min="0" aria-label="Minimum order"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  tbody.innerHTML = store.campaigns.map((c, i) => {
+    const discount = c.discountLabel
+      ? c.discountLabel
+      : (c.discountPct != null ? `${c.discountPct}%` : '—');
+    const activeStates = new Set(['live', 'active', 'ending-soon']);
+    return `
+      <tr class="admin-tr" data-row-i="${i}">
+        <td><span class="admin-tr__city">${c.segment || '—'}</span></td>
+        <td class="admin-td--muted">${c.name}</td>
+        <td><span class="admin-td--muted">${discount} ${c.discountSuffix ? `<span class="admin-td--faint">· ${c.discountSuffix}</span>` : ''}</span></td>
+        <td><span class="admin-td--muted">${c.minOrder || '—'}</span></td>
+        <td>
+          <label class="admin-toggle">
+            <input type="checkbox" class="admin-toggle__input" data-id="${i}" ${activeStates.has(c.status) ? 'checked' : ''}>
+            <span class="admin-toggle__track" aria-hidden="true"></span>
+          </label>
+        </td>
+        <td class="admin-td--muted">${c.validThrough || '—'}</td>
+      </tr>
+    `;
+  }).join('');
 
   document.getElementById('admin-pct')?.addEventListener('input', () => {
     updateEconPreview();
@@ -421,12 +428,13 @@ function autoSave() {
   if (pctEl) { ov.activeCampaign = ov.activeCampaign || {}; ov.activeCampaign.pct      = parseInt(pctEl.value, 10) / 100; }
   if (minEl) { ov.activeCampaign = ov.activeCampaign || {}; ov.activeCampaign.minOrder = parseInt(minEl.value, 10); }
 
-  // Campaign status toggles
+  // Campaign status toggles — keyed by row index since segment+name can repeat
   const toggles = document.querySelectorAll('#admin-campaigns-tbody .admin-toggle__input');
   if (toggles.length) {
-    ov.campaigns = store.campaigns.map(c => {
-      const t = document.querySelector(`#admin-campaigns-tbody .admin-toggle__input[data-city="${c.city}"]`);
-      return { ...c, status: t?.checked ? 'active' : 'inactive' };
+    ov.campaigns = store.campaigns.map((c, i) => {
+      const t = document.querySelector(`#admin-campaigns-tbody .admin-toggle__input[data-id="${i}"]`);
+      // Preserve the original status label when toggled on; only switch to 'inactive' when toggled off
+      return { ...c, status: t?.checked ? (c.status === 'inactive' ? 'live' : c.status) : 'inactive' };
     });
   }
 
@@ -554,12 +562,13 @@ function buildAdminHTML() {
 
         <!-- Tab: Campaigns -->
         <div class="admin-tab-panel is-active" data-panel="campaigns">
-          <p class="admin-hint">Your city campaign row is highlighted. Edit the offer % and minimum order — changes apply automatically.</p>
+          <p class="admin-hint">Edit the hero campaign offer % and minimum order below. Toggle any segment promotion on or off — changes apply automatically.</p>
+          <div class="admin-hero-edit" id="admin-hero-edit"></div>
           <div class="admin-table-scroll">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>City</th><th>Campaign</th><th>Offer %</th><th>Min order</th><th>Active</th><th>Valid through</th>
+                  <th>Segment</th><th>Promotion</th><th>Discount</th><th>Min order</th><th>Active</th><th>Valid through</th>
                 </tr>
               </thead>
               <tbody id="admin-campaigns-tbody"></tbody>

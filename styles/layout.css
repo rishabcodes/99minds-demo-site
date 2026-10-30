@@ -640,12 +640,21 @@
 }
 
 #live-campaigns .section__subhead {
-  color: rgba(255, 255, 255, 0.42);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
 }
 
+/* Outer stack: one row per segment group */
 .campaigns-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  margin-top: 56px;
+}
+
+/* Inner tile grid: 2 tiles per segment, side by side */
+.campaign-segment-group__tiles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 

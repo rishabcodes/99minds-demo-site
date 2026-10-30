@@ -97,33 +97,98 @@ function wireImageFallbacks(grid) {
 export function renderCampaigns() {
   const store = getActiveStore();
   const grid = document.getElementById('campaigns-grid');
+  if (!grid) return;
+
   const visible = store.campaigns.filter(c => c.status !== 'inactive');
-  grid.innerHTML = visible.map((c, i) => buildCampaignTile(c, i)).join('');
+
+  // Group by segment, preserve display order from store.segmentOrder
+  const bySegment = new Map();
+  for (const c of visible) {
+    const key = c.segment;
+    if (!key) continue;
+    if (!bySegment.has(key)) bySegment.set(key, []);
+    bySegment.get(key).push(c);
+  }
+
+  const order = (store.segmentOrder || []).filter(s => bySegment.has(s));
+  for (const key of bySegment.keys()) {
+    if (!order.includes(key)) order.push(key);
+  }
+
+  const total = order.length;
+  let tileIndex = 0;
+  grid.innerHTML = order.map((segmentKey, idx) => {
+    const tiles = bySegment.get(segmentKey);
+    const tilesHtml = tiles.map(c => buildCampaignTile(c, tileIndex++)).join('');
+    const context = store.segmentContext?.[segmentKey] || '';
+    const indexLabel = `${String(idx + 1).padStart(2, '0')} · Segment ${idx + 1} of ${String(total).padStart(2, '0')}`;
+    const activeCount = tiles.length;
+
+    return `
+      <section class="campaign-segment-group" aria-label="${segmentKey}">
+        <div class="campaign-segment-group__context">
+          <span class="campaign-segment-group__index">${indexLabel}</span>
+          <h3 class="campaign-segment-group__title">${segmentKey}</h3>
+          ${context ? `<p class="campaign-segment-group__sub">${context}</p>` : ''}
+          <span class="campaign-segment-group__count">${activeCount} running</span>
+        </div>
+        <div class="campaign-segment-group__tiles" role="list">
+          ${tilesHtml}
+        </div>
+      </section>
+    `;
+  }).join('');
+
+  wireImageFallbacks(grid);
 }
 
 function buildCampaignTile(c, index) {
-  const statusLabel = c.status === 'active' ? 'Active' : 'Launching soon';
-  const statusClass = c.status === 'active' ? 'active' : 'upcoming';
+  const toneClass = c.segmentTone ? `tone-${c.segmentTone}` : '';
+  const statusClass = `campaign-tile__status--${c.status || 'live'}`;
+  const eyebrowUrgent = (c.status === 'ending-soon' || c.status === 'upcoming')
+    ? 'campaign-tile__eyebrow--urgent' : '';
+
+  const discountNumber = c.discountLabel
+    ? `<span class="campaign-tile__discount campaign-tile__discount--label">${c.discountLabel}</span>`
+    : `<span class="campaign-tile__discount">${c.discountPct}<span class="campaign-tile__discount-percent">%</span></span>`;
+
+  const image = c.image || '';
+  const name = c.name || '';
+  const descriptor = c.descriptor || '';
+  const minOrder = c.minOrder || '';
+  const validThrough = c.validThrough || '';
+  const statusLabel = c.status === 'upcoming' ? validThrough
+    : c.status === 'ending-soon' ? validThrough
+    : validThrough;
+
+  const kellyByline = [
+    'Picked by Kelly',
+    c.startedOn,
+    c.customersReached,
+  ].filter(Boolean).join(' · ');
 
   return `
-    <div class="campaign-tile ${c.isUserCity ? 'campaign-tile--active-city' : ''}" role="listitem"
-         data-reveal-fade style="transition-delay:${index * 70}ms">
-      ${c.isUserCity ? '<span class="campaign-tile__your-city">Your City</span>' : ''}
-      <div>
-        <div class="campaign-tile__city">${c.city}</div>
-        <div class="campaign-tile__name">${c.name}</div>
+    <article class="campaign-tile ${toneClass}" role="listitem"
+             data-reveal-fade style="transition-delay:${(index % 6) * 60}ms">
+      <div class="campaign-tile__image">
+        <img src="${image}" alt="${name}" loading="lazy" data-fallback-gradient="true">
+        ${c.statusEyebrow ? `<span class="campaign-tile__eyebrow ${eyebrowUrgent}">${c.statusEyebrow}</span>` : ''}
       </div>
-      <div class="campaign-tile__offer">${c.offer}</div>
-      <div class="campaign-tile__min">${c.minOrder} minimum</div>
-      <div class="campaign-tile__footer">
-        <div class="campaign-tile__status ${statusClass}">
-          <span class="campaign-tile__status-dot"></span>
-          ${statusLabel}
+      <div class="campaign-tile__body">
+        <h4 class="campaign-tile__name">${name}</h4>
+        <p class="campaign-tile__descriptor">${descriptor}</p>
+        <div class="campaign-tile__discount-row">
+          ${discountNumber}
+          <span class="campaign-tile__discount-suffix">${c.discountSuffix || ''}</span>
         </div>
-        <div class="campaign-tile__valid">
-          ${c.status === 'active' ? `Valid through ${c.validThrough}` : c.validThrough}
+        <div class="campaign-tile__meta">
+          <span class="campaign-tile__min">${minOrder}</span>
+          <span class="campaign-tile__status ${statusClass}">
+            <span class="campaign-tile__status-dot"></span>${statusLabel}
+          </span>
         </div>
       </div>
-    </div>
+      <div class="campaign-tile__footer">${kellyByline}</div>
+    </article>
   `;
 }
